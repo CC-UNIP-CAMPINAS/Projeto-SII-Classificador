@@ -27,12 +27,20 @@ module.exports = class Calculator {
         let dw_1 = this.variacao * this.delta(registro) * registro.x1;
         let dw_2 = this.variacao * this.delta(registro) * registro.x2;
         let dw_v = this.variacao * this.delta(registro) * 1;
-        let arrayDeltaW = [this.w1 += dw_1, this.w2 += dw_2, this.wv += dw_v];
-        
-        this.w1 = dw_1;
-        this.w2 = dw_2;
-        this.wv = dw_v;
-        console.log(this.w1);
-        return arrayDeltaW;
+        let arrayWCalculado = [this.w1 += dw_1, this.w2 += dw_2, this.wv += dw_v];
+        // console.log(this.w1, this.w2, this.wv);
+        // console.log(dw_1, dw_2, dw_v);
+        // //console.log(arrayWCalculado);
+        return arrayWCalculado;
+    }
+
+    calculaReta(registro, x_max, x_min) {
+        let y_max = ((-registro.w1 / registro.w2) * x_max) - (registro.wv / registro.w2);
+        let y_min = ((-registro.w1 / registro.w2) * x_min) - (registro.wv / registro.w2);
+        return [{ x: x_max, y: y_max }, { x: x_min, y: y_min }];
+    }
+
+    diminuiTX() {
+        this.variacao -= (this.variacao * 0.05);
     }
 }
